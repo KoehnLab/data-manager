@@ -8,3 +8,12 @@ object-relational-mapping (ORM)). Therefore, you'll have to install this package
 pip3 install SQLAlchemy
 ```
 (see https://docs.sqlalchemy.org/en/20/intro.html#installation for alternative installation methods).
+
+
+## Installation
+
+After having cloned this repository, you'll have to make sure that the `packages` directory is within your `PYTHONPATH`. To ensure that, add the
+following to your `~/.bashrc`:
+```bash
+export PYTHONPATH="$PYTHONPATH:/path/to/this/repo/packages"
+```
