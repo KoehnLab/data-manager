@@ -1,7 +1,8 @@
 # Demonstration
 
 The scripts in this directory shall serve as a quick demonstration on how `data-manager` (and SQLAlchemy) can be used to manipulate the data inside
-the database (DB).
+the database (DB). The scripts must be executed in the suggested order to ensure that the database is in the state that the scripts expect. Before
+starting again, you'll have to manually remove the `sampleDB.sqlite` file in your current directory.
 
 The code is heavily commented in order to give guidance as to what is happening.
 
