@@ -12,7 +12,7 @@ def main():
 
     # More detailed info on used DB URL scheme (can also include username, password, etc.):
     # https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls
-    
+
     # Could be one a remote machine:
     # engine = create_engine("mysql://username@host:/database_name")
 
@@ -30,17 +30,14 @@ def main():
     # backends require a daemon process to run on the target machine and those won't
     # create simple files for individual DBs
 
-
     ################################
     # Step 2: Initialize our DB
     ################################
-    
+
     # Note: All the tables contained in data-manager are registered to this Base class
     # Therefore, it knows what tables shall exist and is able to (and responsible for)
     # create all tables that we need
     Base.metadata.create_all(engine)
-
-
 
 
 if __name__ == "__main__":

@@ -70,7 +70,9 @@ def main():
 
         # Note the slightly non-pythonic syntax inside the where clause. In particular note that only a single "&" is used
         # and if its arguments consist of multiple operands, they have to be put inside parenthesis
-        result = session.scalars(select(Host).where(Host.cpu.contains("Intel") & (Host.cluster == "orpheus"))).first()
+        result = session.scalars(
+            select(Host).where(Host.cpu.contains("Intel") & (Host.cluster == "orpheus"))
+        ).first()
         assert result != None
         print(result.name)
 
