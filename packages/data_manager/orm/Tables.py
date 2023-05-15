@@ -44,7 +44,7 @@ class MethodParameter(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     symmetry: Mapped[str]
     density_fitting: Mapped[bool]
-    active_orbtials: Mapped[Optional[int]]
+    active_orbitals: Mapped[Optional[int]]
     active_electrons: Mapped[Optional[int]]
     additional: Mapped[Optional[str]]
 
@@ -91,9 +91,6 @@ class Result(Base):
     )
     system_id: Mapped[int] = mapped_column(
         ForeignKey(System.id, onupdate="CASCADE", ondelete="CASCADE")
-    )
-    calculation_id: Mapped[int] = mapped_column(
-        ForeignKey(Calculation.id, onupdate="CASCADE", ondelete="CASCADE")
     )
 
     method: Mapped["Method"] = relationship()
