@@ -97,7 +97,7 @@ class Result(Base):
     method_parameter: Mapped[Optional["MethodParameter"]] = relationship()
     basis_set: Mapped["BasisSet"] = relationship()
     system: Mapped["System"] = relationship()
-    energies: Mapped[List["Energy"]] = relationship()
+    energies: Mapped[List["Energy"]] = relationship(back_populates="result")
     calculation: Mapped["Calculation"] = relationship(back_populates="results")
 
 
@@ -111,4 +111,4 @@ class Energy(Base):
         ForeignKey(Result.id, onupdate="CASCADE", ondelete="CASCADE")
     )
 
-    result: Mapped[Result] = relationship()
+    result: Mapped[Result] = relationship(back_populates="energies")
