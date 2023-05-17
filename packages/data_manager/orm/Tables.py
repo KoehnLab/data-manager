@@ -6,6 +6,7 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKeyConstraint
 from sqlalchemy import Table
 from sqlalchemy import Column
 from sqlalchemy import UniqueConstraint
@@ -71,8 +72,14 @@ author_project_association = Table(
     ),
     Column(
         "project_id",
-        ForeignKey("projects.id", onupdate="CASCADE", ondelete="CASCADE"),
         primary_key=True,
+    ),
+    Column(
+        "project_name",
+        primary_key=True,
+    ),
+    ForeignKeyConstraint(
+        ["project_id", "project_name"], ["projects.id", "projects.name"]
     ),
 )
 
@@ -91,8 +98,8 @@ class Author(Base):
 class Project(Base):
     __tablename__ = "projects"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str]
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(primary_key=True)
 
     authors: Mapped[List[Author]] = relationship(
         back_populates="projects", secondary=author_project_association
