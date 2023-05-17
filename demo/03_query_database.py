@@ -8,6 +8,8 @@ from sqlalchemy import desc
 
 from data_manager.orm import (
     Calculation,
+    Project,
+    Author,
     Result,
     Method,
     BasisSet,
@@ -57,6 +59,12 @@ def main():
                 session.scalars(select(Method).order_by(desc(Method.name))).first().name
             )
         )
+
+        # Get all projects of the given author
+        for project in session.scalars(
+            select(Project).where(Project.authors.any(Author.name == "Alan Turing"))
+        ):
+            print("Alan Turing worked on project '{}'".format(project.name))
 
         # Get all energies of methane that are > -12.59
         for energy in session.scalars(select(Energy).where(Energy.value > -12.59)):

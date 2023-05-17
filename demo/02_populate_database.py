@@ -5,6 +5,8 @@ from sqlalchemy.orm import Session
 
 from data_manager.orm import (
     Calculation,
+    Project,
+    Author,
     Result,
     Method,
     BasisSet,
@@ -34,9 +36,12 @@ def main():
         # Step 3: Create data objects
         ################################
 
+        # Create a project to which the calculation belongs
+        myProject = Project(name="Sample project", authors=[Author(name="Alan Turing")])
+
         # Assume we did a CCSD calculation on methane
         calc = Calculation(
-            project="Methan sample project",
+            project=myProject,
             output_path="/path/to/calculation.out",
             host=Host(
                 name="orpheus42",
@@ -44,6 +49,8 @@ def main():
                 cluster="orpheus",
             ),
         )
+
+        assert len(myProject.calculations) == 1
 
         methane = System(name="Methane", charge=0, multiplicity=0)
         ccpVDZ = BasisSet(name="cc-pVDZ")

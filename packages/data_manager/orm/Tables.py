@@ -6,6 +6,8 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
+from sqlalchemy import Table
+from sqlalchemy import Column
 from sqlalchemy import UniqueConstraint
 
 
@@ -59,18 +61,60 @@ class System(Base):
     multiplicity: Mapped[int]
 
 
+author_project_association = Table(
+    "author_project_associations",
+    Base.metadata,
+    Column(
+        "author_id",
+        ForeignKey("authors.id", onupdate="CASCADE", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    Column(
+        "project_id",
+        ForeignKey("projects.id", onupdate="CASCADE", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+)
+
+
+class Author(Base):
+    __tablename__ = "authors"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str]
+
+    projects: Mapped[List["Project"]] = relationship(
+        back_populates="authors", secondary=author_project_association
+    )
+
+
+class Project(Base):
+    __tablename__ = "projects"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str]
+
+    authors: Mapped[List[Author]] = relationship(
+        back_populates="projects", secondary=author_project_association
+    )
+    calculations: Mapped[List["Calculation"]] = relationship(back_populates="project")
+
+
 class Calculation(Base):
     __tablename__ = "calculations"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     output_path: Mapped[Optional[str]]
-    project: Mapped[Optional[str]]
     host_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey(Host.id, onupdate="CASCADE", ondelete="CASCADE")
+    )
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey(Project.id, onupdate="CASCADE", ondelete="CASCADE")
     )
 
     host: Mapped[Optional["Host"]] = relationship()
     results: Mapped[List["Result"]] = relationship(back_populates="calculation")
+    project: Mapped[Project] = relationship(back_populates="calculations")
 
 
 class Result(Base):
