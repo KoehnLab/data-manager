@@ -19,7 +19,7 @@ def main():
     ################################
 
     # See the create_table.py script for more options to create the engine
-    engine = create_engine("sqlite:///sampleDB.sqlite", echo=True)
+    engine = create_engine("sqlite:///sampleDB.sqlite")
 
     ################################
     # Step 2: Connect to existing DB
