@@ -88,7 +88,7 @@ class Author(Base):
     __tablename__ = "authors"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(unique=True)
 
     projects: Mapped[List["Project"]] = relationship(
         back_populates="authors", secondary=author_project_association
