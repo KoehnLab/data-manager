@@ -1,6 +1,7 @@
 from typing import List
 from typing import Optional
 
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -10,6 +11,9 @@ from sqlalchemy import ForeignKeyConstraint
 from sqlalchemy import Table
 from sqlalchemy import Column
 from sqlalchemy import UniqueConstraint
+from sqlalchemy import SQLColumnExpression
+from sqlalchemy import func
+from sqlalchemy import select
 
 
 class Base(DeclarativeBase):
@@ -105,6 +109,20 @@ class Project(Base):
         back_populates="projects", secondary=author_project_association
     )
     calculations: Mapped[List["Calculation"]] = relationship(back_populates="project")
+
+    @hybrid_property
+    def author_count(self) -> int:
+        return len(self.authors)
+
+    @author_count.inplace.expression
+    @classmethod
+    def _author_count_expression(cls) -> SQLColumnExpression[int]:
+        return (
+            select(func.count())
+            .select_from(author_project_association)
+            .where(author_project_association.c.project_id == cls.id)
+            .label("author_count")
+        )
 
 
 class Calculation(Base):

@@ -5,16 +5,12 @@ from sqlalchemy.orm import Session
 
 from data_manager.orm import (
     Calculation,
-    Project,
-    Author,
     Result,
-    Method,
-    BasisSet,
-    System,
     MethodParameter,
     Energy,
-    Host,
 )
+
+from data_manager.queries import getProject, getBasisSet, getHost, getSystem, getMethod
 
 
 def main():
@@ -23,7 +19,7 @@ def main():
     ################################
 
     # See the create_table.py script for more options to create the engine
-    engine = create_engine("sqlite:///sampleDB.sqlite")
+    engine = create_engine("sqlite:///sampleDB.sqlite", echo=True)
 
     ################################
     # Step 2: Connect to existing DB
@@ -37,13 +33,14 @@ def main():
         ################################
 
         # Create a project to which the calculation belongs
-        myProject = Project(name="Sample project", authors=[Author(name="Alan Turing")])
+        myProject = getProject(session, name="Sample project", authors=["Alan Turing"])
 
         # Assume we did a CCSD calculation on methane
         calc = Calculation(
             project=myProject,
             output_path="/path/to/calculation.out",
-            host=Host(
+            host=getHost(
+                session,
                 name="orpheus42",
                 cpu="Intel(R) Xeon(R) CPU E5-2640 v4 @ 2.40GHz",
                 cluster="orpheus",
@@ -52,9 +49,9 @@ def main():
 
         assert len(myProject.calculations) == 1
 
-        methane = System(name="Methane", charge=0, multiplicity=0)
-        ccpVDZ = BasisSet(name="cc-pVDZ")
-        rhfMethod = Method(name="RHF")
+        methane = getSystem(session, name="Methane", charge=0, multiplicity=0)
+        ccpVDZ = getBasisSet(session, name="cc-pVDZ")
+        rhfMethod = getMethod(session, name="RHF")
 
         # First thing we had to do was a RHF calculation
         rhfResult = Result(
@@ -74,7 +71,7 @@ def main():
         assert len(calc.results) == 1
 
         # Followed by the actual CCSD calculation
-        ccsdMethod = Method(name="CCSD")
+        ccsdMethod = getMethod(session, name="CCSD")
         ccsdResult = Result()
         ccsdResult.method = ccsdMethod
         ccsdResult.method_parameter = MethodParameter(
