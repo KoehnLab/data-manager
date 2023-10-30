@@ -25,8 +25,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.0998546"
-     inkscape:cx="451.87791"
-     inkscape:cy="434.1483"
+     inkscape:cx="557.3464"
+     inkscape:cy="448.69567"
      inkscape:window-width="1920"
      inkscape:window-height="1112"
      inkscape:window-x="1920"
@@ -544,7 +544,7 @@
          x="111.14629"
          y="115.39676">keywords</tspan></text>
     <path
-       style="fill:#ffffff;stroke:#e49200;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle);marker-end:url(#Triangle)"
+       style="fill:none;stroke:#e49200;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle);marker-end:url(#Triangle)"
        d="M 40.133214,47.62213 H 52.96018 V 108.538 H 42.885029"
        id="path44"
        sodipodi:nodetypes="cccc" />
