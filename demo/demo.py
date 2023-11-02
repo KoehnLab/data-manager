@@ -45,7 +45,7 @@ def add_data(session: Session):
     session.commit()
 
 
-def selecting_data(session: Session):
+def select_data(session: Session):
     # Data is retrieved by means of SELECT statements
     # A select yields a result set of which we can then select what we want. That is,
     # a select always yields ALL elements that fulfill the search criteria.
@@ -98,7 +98,7 @@ def count_occurrences(session: Session):
     amountOfProjects = session.scalars(select(func.count()).select_from(Project)).one()
 
 
-def modifying_objects(session: Session):
+def modify_objects(session: Session):
     # In order to modify, we first have to obtain an object from the DB
     project = session.scalars(
         select(Project).where(Project.name == "Sample project")
@@ -111,7 +111,7 @@ def modifying_objects(session: Session):
     session.commit()
 
 
-def deleting_objects(session: Session):
+def delete_data(session: Session):
     # If you want to remove an element from the database, you have to use a delete query
 
     # Note that deleting non-existent elements is a no-op
@@ -138,11 +138,11 @@ def deleting_objects(session: Session):
 def main():
     with open_database("sample_db") as session:
         add_data(session)
-        selecting_data(session)
+        select_data(session)
         check_for_existence(session)
         count_occurrences(session)
-        modifying_objects(session)
-        deleting_objects(session)
+        modify_objects(session)
+        delete_data(session)
 
 
 if __name__ == "__main__":
