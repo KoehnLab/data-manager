@@ -48,7 +48,7 @@ class Result(Base):
             self._data_type = "str"
         elif type(value) == list:
             raise RuntimeError(
-                "Adding lists directly is not supported. Add the individual list elements as individual results and add the index as a note."
+                "Adding lists directly is not supported. Use insert_collection_result from the utils module instead"
             )
         else:
             raise RuntimeError("Unsupported data type: " + str(type(value)))
