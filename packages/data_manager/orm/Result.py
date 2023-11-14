@@ -27,7 +27,7 @@ class Result(Base):
         creator=lambda k, v: ResultProperty(keyword=k, value=v),
     )
 
-    processing_step: Mapped["ProcessingStep"] = relationship()  # type: ignore
+    processing_step: Mapped["ProcessingStep"] = relationship(back_populates="results")  # type: ignore
 
     @property
     def data(self):
