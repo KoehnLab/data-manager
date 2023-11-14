@@ -1,8 +1,10 @@
 from typing import Optional
 from enum import Enum
 from pathlib import Path
+import warnings
 
 from sqlalchemy import create_engine, event, Engine, event
+from sqlalchemy.exc import SAWarning
 from sqlalchemy.orm import Session
 
 from data_manager.orm import Base
@@ -55,6 +57,10 @@ def open_database(
             raise RuntimeError(
                 "Database '%s' does not exist and create_as_needed == False" % database
             )
+
+        # Turn SQLAlchemy warnings into errors as these often indicate that something is fishy and that the
+        # current data manipulation doesn't (fully) do what one expects
+        warnings.filterwarnings("error", category=SAWarning)
 
         return Session(engine)
 
