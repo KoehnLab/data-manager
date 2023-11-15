@@ -121,7 +121,7 @@ class Keyword(Base):
     __tablename__ = "keywords"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(unique=True)
 
     processing_steps: Mapped[List["ProcessingStep"]] = relationship(
         secondary=keyword_step_association,
