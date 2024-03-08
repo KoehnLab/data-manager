@@ -21,7 +21,7 @@ def get_or_create_project(session: Session, name: str) -> Project:
 
 
 def get_or_create_author(
-    session: Session, name: str, affiliation: Optional[str]
+    session: Session, name: str, affiliation: Optional[str] = None
 ) -> Author:
     """Gets the Author with the given name (and affiliation). If no such object exists yet, a new one will
     be created and added to the session. In case the search yields more than a single existing result, this
@@ -45,7 +45,9 @@ def get_or_create_author(
     return author
 
 
-def get_or_create_system(session: Session, name: str, variant: Optional[str]) -> System:
+def get_or_create_system(
+    session: Session, name: str, variant: Optional[str] = None
+) -> System:
     """Gets the Session with the given name (in the given variant). If no such object exists yet, a new one will
     be created and added to the session. In case the search yields more than a single existing result, this
     function will error as disambiguation has to be done by the user (and then the desired system can be selected
