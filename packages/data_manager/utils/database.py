@@ -32,6 +32,7 @@ def open_database(
     user: Optional[str] = None,
     password: Optional[str] = None,
     create_as_needed: bool = True,
+    echo: bool = False
 ) -> Session:
     if backend == Backend.SQLite:
         assert host is None
@@ -42,7 +43,7 @@ def open_database(
         if not database.endswith(".sqlite"):
             database += ".sqlite"
 
-        engine = create_engine("sqlite:///%s" % database)
+        engine = create_engine("sqlite:///%s" % database, echo=echo)
 
         path = Path(database)
         if path.exists():
